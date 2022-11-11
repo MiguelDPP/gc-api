@@ -40,10 +40,13 @@ class UserController extends Controller
 
         $email = User::where('email', $request->email)->where('id', '!=', $user->id)->first();
 
-        if($request->has('email') && $request->email != $user->email && is_null($email)) {
+        if($request->has('email') && is_null($email)) {
             $user->update($request->except('id', 'username', 'role', 'code_verification', 'isActive', 'email_verified_at'));
         }else {
-            $user->update($request->except('id', 'username', 'role', 'email', 'code_verification', 'isActive', 'email_verified_at'));
+            return response()->json([
+                'message' => 'Email already exists'
+            ], 400);
+            // $user->update($request->except('id', 'username', 'role', 'email', 'code_verification', 'isActive', 'email_verified_at'));
         }
 
         return response()->json([
