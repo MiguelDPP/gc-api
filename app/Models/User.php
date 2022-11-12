@@ -30,6 +30,7 @@ class User extends Model
         'username',
         'email',
         'municipality_id',
+        'isActive',
         'photo',
     ];
 
@@ -39,6 +40,10 @@ class User extends Model
 
     public function roles () {
         return $this->belongsToMany(Role::class, 'users_roles_relationship', 'user_id', 'role_id')->withPivot('password', 'remember_token');
+    }
+
+    public function errors () {
+        return $this->hasMany(Error::class, 'user_id', 'id');
     }
 
     /**

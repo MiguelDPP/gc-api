@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,12 +31,26 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::patch('/user', [UserController::class, 'update']); // Update user information
     Route::post('/disable-user', [UserController::class, 'disableUser']); // Disable user
 
+    // Errores
+    Route::post('/error', [ErrorController::class, 'store']); // Register error
+    Route::get('/error/{id}', [ErrorController::class, 'show']); // Get all errors
+    Route::get('/errors', [ErrorController::class, 'indexUser']); // Get errors list
+    Route::patch('/error', [ErrorController::class, 'update']); // Update error
+
+
+    // Comentarios
+    Route::post('/comment', [ErrorController::class, 'storeComment']); // Register comment
+    Route::get('/error/{error_id}/comments', [ErrorController::class, 'indexComments']); // Get comments list
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
 
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/users', [AdminController::class, 'users']);
+        Route::get('/user/{id}', [AdminController::class, 'showUser']);
         Route::patch('/update-user', [AdminController::class, 'update']);
+
+        // Errores
+        Route::get('/errors-admin', [ErrorController::class, 'index']); // Get errors list
     });
 });
