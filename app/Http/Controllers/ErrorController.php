@@ -71,9 +71,15 @@ class ErrorController extends Controller
         ], 200);
     }
 
-    public function update (Request $request) {
+    public function update (Request $request, $id) {
+
+        if (!is_numeric($id)) {
+            return response()->json([
+                'message' => 'Invalid error id'
+            ], 400);
+        }
+
         $rules = [
-            'id' => 'required|integer',
             'title' => 'string',
             'description' => 'string',
             'url' => 'string',
@@ -82,7 +88,7 @@ class ErrorController extends Controller
 
         $request->validate($rules);
 
-        $error = Error::find($request->id);
+        $error = Error::find($id);
         if (is_null($error) || $error->user_id != auth()->user()->user_id) {
             return response()->json([
                 'message' => 'Error not found'

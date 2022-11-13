@@ -45,9 +45,15 @@ class AdminController extends Controller
         ], 200);
     }
 
-    public function update (Request $request) {
+    public function update (Request $request, $id) {
+
+        if (!Str::isUuid($id)) {
+            return response()->json([
+                'message' => 'Invalid user id'
+            ], 400);
+        }
+
         $rules = [
-            'id'=> 'required|uuid',
             'firstName' => 'string',
             'secondName' => 'string',
             'surname' => 'string',
@@ -62,7 +68,7 @@ class AdminController extends Controller
 
         $request->validate($rules);
 
-        $user = User::find($request->id);
+        $user = User::find($id);
 
         $email = User::where('email', $request->email)->where('id', '!=', $user->id)->first();
 

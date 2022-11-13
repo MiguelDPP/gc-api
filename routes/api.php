@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\LabelController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,22 +37,44 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/error', [ErrorController::class, 'store']); // Register error
     Route::get('/error/{id}', [ErrorController::class, 'show']); // Get all errors
     Route::get('/errors', [ErrorController::class, 'indexUser']); // Get errors list
-    Route::patch('/error', [ErrorController::class, 'update']); // Update error
+    Route::patch('/error/{id}', [ErrorController::class, 'update']); // Update error
 
 
     // Comentarios
     Route::post('/comment', [ErrorController::class, 'storeComment']); // Register comment
     Route::get('/error/{error_id}/comments', [ErrorController::class, 'indexComments']); // Get comments list
 
+
+    // Etiquetas
+    Route::get('/labels', [LabelController::class, 'index']); // Get labels list
+    Route::get('/label/{id}', [LabelController::class, 'show']); // Get label
+    Route::post('/label/search', [LabelController::class, 'search']); // Search label
+
+    // Gestor de preguntas
+    Route::post('/question', [QuestionController::class, 'store']); // Register question
+    Route::get('/question/{id}', [QuestionController::class, 'show']); // Get question
+    Route::get('/questions', [QuestionController::class, 'index']); // Get questions list
+    Route::get('/questions/my', [QuestionController::class, 'myQuestions']); // Get questions list by user
+    Route::patch('/question/{id}', [QuestionController::class, 'update']); // Update question NOTA: Falta probar
+
+    // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 
 
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/users', [AdminController::class, 'users']);
         Route::get('/user/{id}', [AdminController::class, 'showUser']);
-        Route::patch('/update-user', [AdminController::class, 'update']);
+        Route::patch('/update-user/{id}', [AdminController::class, 'update']);
 
         // Errores
         Route::get('/errors-admin', [ErrorController::class, 'index']); // Get errors list
+
+        // Gestor de preguntas
+        Route::get('/questions-admin', [QuestionController::class, 'showQuestionWithOptions']); // Get questions list
+
+        // Crear etiquetas solo lo puede hacer el administrador
+        Route::post('/label', [LabelController::class, 'store']); // Register label
+        Route::patch('/label/{id}', [LabelController::class, 'update']); // Update label
+        Route::delete('/label/{id}', [LabelController::class, 'destroy']); // Delete label
     });
 });

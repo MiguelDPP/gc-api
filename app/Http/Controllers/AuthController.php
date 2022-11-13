@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
     public function register (RegisterRequest $request) {
+        $request->id = Str::uuid();
         $user = User::create($request->validated());
 
         $user->roles()->attach($request->role, ['password'=> bcrypt($request->password)]);
