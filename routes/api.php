@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/prueba', function (Request $request) {
+    return response()->json(['message' => 'Hola mundo']);
+});
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/recovery', [AuthController::class, 'sendEmailRecoveryPassword']);
