@@ -89,7 +89,9 @@ class AuthController extends Controller
             ], 404);
         }
 
-        $token = Str::random(8);
+        $token = Str::random(4);
+        // Token numerico
+        // $token = rand(1000, 9999);
 
         // $relation->password = bcrypt($token);
         // $relation->save();

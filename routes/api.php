@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\LabelController;
+use App\Http\Controllers\OtherController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -23,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/prueba', function (Request $request) {
     return response()->json(['message' => 'Hola mundo']);
 });
+
+Route::get('/departments', [OtherController::class, 'getDepartments']);
+Route::get('/municipalities/{id}', [OtherController::class, 'getMunicipalities']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
