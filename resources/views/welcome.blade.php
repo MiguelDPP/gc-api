@@ -1,1 +1,1 @@
-{{$info['name']}}, su token de recuperación es: {{$info['token']}}.
+Hola {{$info['name']}}, su token de recuperación es: {{$info['token']}}.
