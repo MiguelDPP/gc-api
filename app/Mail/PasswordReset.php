@@ -44,7 +44,7 @@ class PasswordReset extends Mailable
     public function content()
     {
         return new Content(
-            view: 'welcome',
+            view: 'codeRecovery',
         );
     }
 
