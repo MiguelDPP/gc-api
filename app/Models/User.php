@@ -15,6 +15,7 @@ use App\Traits\Uuids;
 class User extends Model
 {
     use HasFactory, Notifiable, Uuids;
+    // Aañadimos el trait HasUuids
 
     /**
      * The attributes that are mass assignable.
