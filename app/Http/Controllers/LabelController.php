@@ -18,11 +18,16 @@ class LabelController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:labels',
-            'description' => 'required',
-            'color' => 'required',
+            // 'description' => 'required',
+            'color' => 'string',
         ]);
 
-        $label = Label::create($request->all());
+        $label = Label::create(
+            [
+                'name' => $request->name,
+                'description' => "a description",
+            ]
+        );
 
         return response()->json($label, 201);
     }
