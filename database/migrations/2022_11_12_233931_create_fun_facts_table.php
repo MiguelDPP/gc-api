@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('fun_facts', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
             $table->foreignId('question_id');
             $table->text('content');
             $table->timestamps();

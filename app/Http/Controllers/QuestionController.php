@@ -26,6 +26,8 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'title' => 'nullable|string',
+            'funFact_title' => 'nullable|string',
             'question' => 'required|string',
             'type_question_id' => 'required|exists:type_questions,id',
             'time' => 'required|integer',
@@ -47,6 +49,7 @@ class QuestionController extends Controller
 
 
         $question = Question::create([
+            'title' => $request->title,
             'question' => $request->question,
             'created_by_id' => auth()->user()->user_id,
             'type_question_id' => $request->type_question_id,
@@ -58,6 +61,7 @@ class QuestionController extends Controller
 
         if ($request->has('funFact')) {
             $question->funFacts()->create([
+                'title' => $request->funFact_title,
                 'content' => $request->funFact,
             ]);
         }

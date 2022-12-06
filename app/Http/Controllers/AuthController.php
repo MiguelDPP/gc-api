@@ -47,9 +47,9 @@ class AuthController extends Controller
             ], 401);
         }
 
-        if ($relation->tokens()->count() > 0) {
-            $relation->tokens()->delete();
-        }
+        // if ($relation->tokens()->count() > 0) {
+        //     $relation->tokens()->delete();
+        // }
 
         $token = $relation->createToken('auth_token')->plainTextToken;
 

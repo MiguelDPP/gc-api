@@ -11,6 +11,7 @@ class FunFact extends Model
 
     protected $fillable = [
         'id',
+        'title',
         'question_id',
         'content',
     ];

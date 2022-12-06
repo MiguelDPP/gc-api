@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
             $table->text('question');
             $table->uuid('created_by_id');
             $table->foreignId('type_question_id');
