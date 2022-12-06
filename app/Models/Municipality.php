@@ -15,6 +15,7 @@ class Municipality extends Model
     ];
 
     public function department () {
+        // Relación de uno a muchos
         return $this->hasOne(Department::class, 'id', 'department_id');
     }
 }
