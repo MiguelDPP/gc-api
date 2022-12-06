@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\UserDisabled;
 use App\Models\User;
+use App\Models\User_Role_Relationship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -31,6 +32,7 @@ class UserController extends Controller
             'secondSurname' => 'string',
             'email' => 'email',
             'municipality_id' => 'integer',
+            'password' => 'string',
             'photo' => 'image',
         ];
 
@@ -47,6 +49,11 @@ class UserController extends Controller
                 'message' => 'Email already exists'
             ], 400);
             // $user->update($request->except('id', 'username', 'role', 'email', 'code_verification', 'isActive', 'email_verified_at'));
+        }
+        if ($request->has('password')) {
+            $relation = User_Role_Relationship::where('user_id', $user->id)->first();
+            $relation->password = bcrypt($request->password);
+            $relation->save();
         }
 
         return response()->json([
