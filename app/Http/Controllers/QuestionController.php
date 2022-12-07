@@ -198,11 +198,13 @@ class QuestionController extends Controller
 
         $question = Question::find($id);
 
+        $user = auth()->user();
+
         if (!$question) {
             return response()->json([
                 'message' => 'No se encontró la pregunta',
             ], 404);
-        }elseif (auth()->user()->role_id !== 1 && $question->is_validated == false) {
+        }elseif (auth()->user()->role_id !== 1 && $question->create_by_id !== $user->user_id) {
             return response()->json([
                 'message' => 'No se encontró la pregunta',
             ], 404);
