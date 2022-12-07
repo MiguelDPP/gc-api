@@ -38,6 +38,7 @@ Route::post('/enableUser', [UserController::class, 'enableUser']); // Enable use
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [UserController::class, 'user']); // Get user information
+    Route::get('/user/{id}', [UserController::class, 'find']); // Get user information
     Route::get('/users/list', [UserController::class, 'list']); // List User Student
     Route::patch('/user', [UserController::class, 'update']); // Update user information
     Route::post('/disable-user', [UserController::class, 'disableUser']); // Disable user
