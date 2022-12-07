@@ -25,12 +25,13 @@ class QuestionController extends Controller
 
     public function store(Request $request)
     {
+        $user = auth()->user();
         $request->validate([
             'title' => 'nullable|string',
             'funFact_title' => 'nullable|string',
             'question' => 'required|string',
             'type_question_id' => 'required|exists:type_questions,id',
-            'time' => 'required|integer',
+            'time' => 'integer',
             'municipality_id' => 'exists:municipalities,id',
             'points' => 'required|integer',
             'answers' => 'array',
@@ -54,7 +55,7 @@ class QuestionController extends Controller
             'created_by_id' => auth()->user()->user_id,
             'type_question_id' => $request->type_question_id,
             'time' => $request->time,
-            'is_validated' => $request->is_validated,
+            'is_validated' => ($user->role_id == 1 ? true : false),
             'municipality_id' => $request->municipality_id,
             'points' => $request->points,
         ]);
