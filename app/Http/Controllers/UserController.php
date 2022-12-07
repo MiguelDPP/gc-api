@@ -15,7 +15,7 @@ class UserController extends Controller
         $listUserStudent = User_Role_Relationship::where('id', 2)->get();
         $listUsers = [];
         foreach($listUserStudent as $user){
-            $itemUser = User::where('id',$user->user_id);
+            $itemUser = User::where('id',$user->user_id)->get();
             array_push($listUsers,$itemUser);
         }
         return response()->json([
