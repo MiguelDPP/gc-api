@@ -210,7 +210,7 @@ class QuestionController extends Controller
             ], 404);
         }
 
-        $question->load('answers', 'funFacts', 'labels');
+        $question->load('answers', 'funFacts', 'labels', 'municipality', 'typeQuestion');
 
         return response()->json([
             'question' => $question
