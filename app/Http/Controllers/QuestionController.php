@@ -54,7 +54,7 @@ class QuestionController extends Controller
             'question' => $request->question,
             'created_by_id' => auth()->user()->user_id,
             'type_question_id' => $request->type_question_id,
-            'time' => $request->time,
+            'time' => ($request->time)? $request->time : 30,
             'is_validated' => ($user->role_id == 1 ? true : false),
             'municipality_id' => $request->municipality_id,
             'points' => $request->points,
@@ -272,7 +272,7 @@ class QuestionController extends Controller
             ], 404);
         }
 
-        $questions->load('answers', 'funFacts', 'labels');
+        $questions->load('answers', 'funFacts', 'labels', 'municipality', 'typeQuestion');
 
         return response()->json([
             'questions' => $questions,
