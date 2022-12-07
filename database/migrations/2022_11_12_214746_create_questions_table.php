@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('question');
             $table->uuid('created_by_id');
             $table->foreignId('type_question_id');
-            $table->integer('time');
+            $table->integer('time')->default(30);
             $table->boolean('is_validated')->default(false);
             $table->foreignId('municipality_id')->nullable();
             $table->integer('points');
