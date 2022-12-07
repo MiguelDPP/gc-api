@@ -20,7 +20,7 @@ class UserController extends Controller
         }
         return response()->json([
             'message' => 'List Users',
-            'listUser' => $list
+            'listUser' => $listUsers
         ], 200);
     }
 
