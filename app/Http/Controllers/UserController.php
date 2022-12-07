@@ -11,6 +11,19 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    public function list(){
+        $listUserStudent = User_Role_Relationship::where('id', 2)->get();
+        $listUsers = [];
+        foreach($listUserStudent as $user){
+            $itemUser = User::where('id',$user->user_id);
+            array_push($listUsers,$itemUser);
+        }
+        return response()->json([
+            'message' => 'List Users',
+            'listUser' => $list
+        ], 200);
+    }
+
     public function user (Request $request) {
         $user_role = auth()->user();
 
