@@ -12,10 +12,10 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
     public function list(){
-        $listUserStudent = User_Role_Relationship::where('id', 2)->get();
+        $listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
         $listUsers = [];
-        foreach($listUserStudent as $user){
-            $itemUser = User::where('id',$user->user_id)->get();
+        foreach($listUserStudent as $item){
+            $itemUser = User::where('id',$item->user_id)->first();
             array_push($listUsers,$itemUser);
         }
         return response()->json([
