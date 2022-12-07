@@ -24,6 +24,16 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function find ($id) {
+        $user = User::where('id',$id)->first();
+
+        return response()->json([
+            'message' => 'User information',
+            'user' => $user->load('municipality', 'roles'),
+            'role' => $user_role->role()->first()
+        ], 200);
+    }
+
     public function user (Request $request) {
         $user_role = auth()->user();
 
