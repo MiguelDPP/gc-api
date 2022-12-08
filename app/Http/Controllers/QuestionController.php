@@ -382,6 +382,7 @@ class QuestionController extends Controller
             //     'title' => $request->funFact_title,
             //     'content' => $request->funFact,
             // ]);
+            // Puede que no haya añadido un funFact
             $question->funFacts()->delete();
             $question->funFacts()->create([
                 'title' => $request->funFact_title,
