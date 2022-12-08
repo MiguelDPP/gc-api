@@ -408,4 +408,59 @@ class QuestionController extends Controller
             'question' => $question,
         ], 200);
     }
+
+    public function destroy($id)
+    {
+        if (!is_numeric($id)) {
+            return response()->json([
+                'message' => 'El id debe ser un número',
+            ], 400);
+        }
+
+        $question = Question::find($id);
+
+        if (!$question) {
+            return response()->json([
+                'message' => 'No se encontró la pregunta',
+            ], 404);
+        }elseif (auth()->user()->role_id !== 1 && ($question->created_by_id !== auth()->user()->user_id)) {
+            return response()->json([
+                'message' => 'No se encontró la pregunta',
+            ], 404);
+        }
+
+        $question->delete();
+
+        return response()->json([
+            'message' => 'Pregunta eliminada',
+        ], 200);
+    }
+
+    public function validateQuestion ($id) {
+        if (!is_numeric($id)) {
+            return response()->json([
+                'message' => 'El id debe ser un número',
+            ], 400);
+        }
+
+        $question = Question::find($id);
+
+        if (!$question) {
+            return response()->json([
+                'message' => 'No se encontró la pregunta',
+            ], 404);
+        }elseif (auth()->user()->role_id !== 1) {
+            return response()->json([
+                'message' => 'No se encontró la pregunta',
+            ], 404);
+        }
+
+        $question->update([
+            'is_validated' => true,
+        ]);
+
+        return response()->json([
+            'message' => 'Pregunta validada',
+        ], 200);
+    }
 }

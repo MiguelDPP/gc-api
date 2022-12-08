@@ -66,6 +66,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/questions', [QuestionController::class, 'index']); // Get questions list
     Route::get('/questions/my', [QuestionController::class, 'myQuestions']); // Get questions list by user
     Route::patch('/question/{id}', [QuestionController::class, 'update']); // Update question NOTA: Falta probar
+    Route::delete('/question/{id}', [QuestionController::class, 'destroy']); // Delete question
+    Route::post('/question/{id}/validate', [QuestionController::class, 'validateQuestion']); // Validate question
+
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
