@@ -15,7 +15,7 @@ class QuestionController extends Controller
             $questions = Question::where('is_validated', true)->get();
         }
 
-        $questions->load('answers', 'labels', 'createdBy', 'createdBy.role', 'createdBy.user');
+        $questions->load('answers', 'labels', 'createdBy', 'createdBy.user');
 
         return response()->json([
             'message' => 'Questions information',
