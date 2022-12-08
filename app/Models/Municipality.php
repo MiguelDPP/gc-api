@@ -18,4 +18,9 @@ class Municipality extends Model
         // Relación de uno a muchos
         return $this->hasOne(Department::class, 'id', 'department_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
