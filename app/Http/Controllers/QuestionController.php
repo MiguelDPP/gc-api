@@ -378,7 +378,12 @@ class QuestionController extends Controller
         // }
 
         if ($request->has('funFact')) {
-            $question->funFacts()->first()->update([
+            // $question->funFacts()->first()->update([
+            //     'title' => $request->funFact_title,
+            //     'content' => $request->funFact,
+            // ]);
+            $question->funFacts()->delete();
+            $question->funFacts()->create([
                 'title' => $request->funFact_title,
                 'content' => $request->funFact,
             ]);
