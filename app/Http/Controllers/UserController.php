@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\UserDisabled;
 use App\Models\User;
+use App\Models\Municipality;
 use App\Models\User_Role_Relationship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -26,11 +27,13 @@ class UserController extends Controller
 
     public function find ($id) {
         $user = User::where('id',$id)->first();
-
+        $municipality = Municipality::where('id',$user->municipality_id)->first();
+        /** HOLAAAAA */
         return response()->json([
             'message' => 'User information',
-            'user' => $user->load('municipality', 'roles'),
-            'role' => $user_role->role()->first()
+            'user' => $user,
+            'municipality' => $municipality,
+            'roles' => $user->roles(),
         ], 200);
     }
 
