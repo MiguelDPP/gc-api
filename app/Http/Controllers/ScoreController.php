@@ -33,7 +33,7 @@ class ScoreController extends Controller
             }
         }
 
-        $question = Question::inRandomOrder()->where('is_validated', true)->where('id', '!=', $questions->pluck('id'))->first();
+        $question = Question::inRandomOrder()->where('is_validated', true)->where('id', '!=', $questions->pluck('id'))->where('is_validated', true)->first();
 
         if (!$question) {
             return response()->json([
@@ -69,6 +69,51 @@ class ScoreController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'Answer stored',
+        ]);
+    }
+
+    public function getScore ($id) {
+        $score = Score::find($id);
+
+        $questions = $score->questions;
+
+        $points = 0;
+
+        foreach ($questions as $question) {
+            $answer = $question->answer;
+            if ($answer != null && $answer->is_correct) {
+                $points += $question->points;
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'date' => $score->created_at,
+            'points' => $points,
+        ]);
+    }
+
+    public function getScores () {
+        $scores = Score::all();
+
+        foreach ($scores as $score) {
+            $questions = $score->questions;
+
+            $points = 0;
+
+            foreach ($questions as $question) {
+                $answer = $question->answer;
+                if ($answer != null && $answer->is_correct) {
+                    $points += $question->points;
+                }
+            }
+
+            $score->points = $points;
+        }
+
+        return response()->json([
+            'status' => 200,
+            'scores' => $scores,
         ]);
     }
 
