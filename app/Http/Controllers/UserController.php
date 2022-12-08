@@ -29,8 +29,9 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User information',
-            'user' => $user->load('municipality', 'roles'),
-            'role' => $user_role->role()->first()
+            'user' => $user,
+            'municipality' =>$user->municipality(),
+            'roles' => $user->$user->roles(),
         ], 200);
     }
 
