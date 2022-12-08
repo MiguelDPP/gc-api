@@ -9,7 +9,7 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->user_id == 1) {
+        if (auth()->user()->role_id == 1) {
             $questions = Question::all();
         } else {
             $questions = Question::where('is_validated', true)->get();
