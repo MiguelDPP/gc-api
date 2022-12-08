@@ -332,8 +332,8 @@ class QuestionController extends Controller
         }else {
             $question->update($request->except('answers', 'funFact', 'labels', 'type_question_id', 'is_validated'));
         }
-
-        if ($request->has('type_question_id') && $request->type_question_id != $question->type_question_id) {
+        // && $request->type_question_id != $question->type_question_id
+        if ($request->has('type_question_id')) {
             if ($request->has('answers')) {
                 $request->validate([
                     'answers.*.response' => 'required|string',
@@ -361,20 +361,21 @@ class QuestionController extends Controller
                 //     ]);
                 // }
             }
-        }elseif ($request->has('answers') && (!$request->has('type_question_id') || $request->type_question_id == $question->type_question_id)) {
-            $request->validate([
-                'answers.*.id' => 'exists:answers,id',
-                'answers.*.response' => 'required|string',
-                'answers.*.is_correct' => 'required|boolean',
-            ]);
-
-            foreach ($request->answers as $answer) {
-                $data = $question->answers()->find($answer['id']);
-                if ($data) {
-                    $data->update($answer);
-                }
-            }
         }
+        // elseif ($request->has('answers') && (!$request->has('type_question_id') || $request->type_question_id == $question->type_question_id)) {
+        //     $request->validate([
+        //         'answers.*.id' => 'exists:answers,id',
+        //         'answers.*.response' => 'required|string',
+        //         'answers.*.is_correct' => 'required|boolean',
+        //     ]);
+
+        //     foreach ($request->answers as $answer) {
+        //         $data = $question->answers()->find($answer['id']);
+        //         if ($data) {
+        //             $data->update($answer);
+        //         }
+        //     }
+        // }
 
         if ($request->has('funFact')) {
             $question->funFacts()->first()->update([
