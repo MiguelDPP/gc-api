@@ -44,4 +44,9 @@ class Question extends Model
     {
         return $this->hasOne(TypeQuestion::class, 'id', 'type_question_id');
     }
+
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
+    }
 }
