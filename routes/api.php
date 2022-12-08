@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/question/{id}', [QuestionController::class, 'destroy']); // Delete question
     Route::post('/question/{id}/validate', [QuestionController::class, 'validateQuestion']); // Validate question
 
-    // Scores
+    // Scores al dia
     Route::post('/score', [ScoreQuestion::class, 'storeScore']); // Register score
     Route::get('/questionScore/{id}', [ScoreQuestion::class, 'getQuestionScore']); // Get question
     Route::path('/questionScore/{id}', [ScoreQuestion::class, 'storeQuestion']); // Update score
