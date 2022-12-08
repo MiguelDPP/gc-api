@@ -290,6 +290,8 @@ class QuestionController extends Controller
         }
 
         $request->validate([
+            'title' => 'nullable|string',
+            'funFact_title' => 'nullable|string',
             'question' => 'string',
             'type_question_id' => 'exists:type_questions,id',
             'time' => 'integer',
@@ -301,6 +303,17 @@ class QuestionController extends Controller
             'answers' => 'array',
         ]);
 
+        // 'title' => 'nullable|string',
+        //     'funFact_title' => 'nullable|string',
+        //     'question' => 'required|string',
+        //     'type_question_id' => 'required|exists:type_questions,id',
+        //     'time' => 'integer',
+        //     'municipality_id' => 'exists:municipalities,id',
+        //     'points' => 'required|integer',
+        //     'answers' => 'array',
+        //     'funFact' => 'nullable|string',
+        //     'labels' => 'array',
+
         $question = Question::find($id);
 
         $typeQuestion = $question->type_question_id;
@@ -309,7 +322,8 @@ class QuestionController extends Controller
             return response()->json([
                 'message' => 'No se encontró la pregunta',
             ], 404);
-        }elseif (auth()->user()->role_id !== 1 && ($question->is_validated == true || $question->created_by_id !== auth()->user()->user_id)) {
+            // $question->is_validated == true ||
+        }elseif (auth()->user()->role_id !== 1 && ($question->created_by_id !== auth()->user()->user_id)) {
             return response()->json([
                 'message' => 'No se encontró la pregunta',
             ], 404);
@@ -364,6 +378,7 @@ class QuestionController extends Controller
 
         if ($request->has('funFact')) {
             $question->funFacts()->first()->update([
+                'title' => $request->funFact_title,
                 'content' => $request->funFact,
             ]);
         }
