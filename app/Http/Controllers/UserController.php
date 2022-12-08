@@ -28,7 +28,7 @@ class UserController extends Controller
     public function find ($id) {
         $user = User::where('id',$id)->first();
         $municipality = Municipality::where('id',$user->municipality_id)->first();
-
+        /** HOLAAAAA */
         return response()->json([
             'message' => 'User information',
             'user' => $user,
