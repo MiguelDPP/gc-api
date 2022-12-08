@@ -30,8 +30,8 @@ class UserController extends Controller
         return response()->json([
             'message' => 'User information',
             'user' => $user,
-            'municipality' =>$user->municipality(),
-            'roles' => $user->$user->roles(),
+            'municipality' => $user->municipality(),
+            'roles' => $user->roles(),
         ], 200);
     }
 
