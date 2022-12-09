@@ -58,16 +58,16 @@ class ScoreController extends Controller
         ]);
     }
 
-    public function storeQuestion ($id) {
+    public function storeQuestion (Request $request, $id) {
         $rules = [
             'answer' => 'required|boolean',
         ];
 
-        $request = request()->validate($rules);
+        $request->validate($rules);
 
         $scoreQuestion = ScoreQuestion::find($id);
 
-        $scoreQuestion->answer = $request['answer'];
+        $scoreQuestion->answer = $request->answer;
         $scoreQuestion->save();
 
         return response()->json([
