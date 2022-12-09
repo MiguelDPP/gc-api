@@ -87,7 +87,7 @@ class ScoreController extends Controller
         foreach ($questions as $question) {
             $answer = $question->answer;
             if ($answer != null && $answer) {
-                // $pointsT =
+                // $pointsT = $question->question->points;
                 $points += $question->question->points;
             }
         }
