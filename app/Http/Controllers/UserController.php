@@ -63,7 +63,12 @@ class UserController extends Controller
 
         $request->validate($rules);
 
-        $user = auth()->user()->user()->first();
+        if($request->has('id')){
+            $user =User::where('id', $request->id)->first();
+        }else{
+            $user = auth()->user()->user()->first();
+        }
+
 
         $email = User::where('email', $request->email)->where('id', '!=', $user->id)->first();
 
