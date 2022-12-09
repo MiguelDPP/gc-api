@@ -15,7 +15,7 @@ class Score extends Model
 
     public function questions()
     {
-        return $this->belongsToMany(Question::class, 'score_questions', 'score_id', 'question_id')->withPivot('answer_id');
+        return $this->hasMany(ScoreQuestion::class, 'score_id', 'id');
     }
 
     public function user()
