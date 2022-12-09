@@ -73,7 +73,11 @@ class UserController extends Controller
         $email = User::where('email', $request->email)->where('id', '!=', $user->id)->first();
 
         if($request->has('email') && is_null($email)) {
-            $user->update($request->except('id', 'username', 'role', 'code_verification', 'isActive', 'email_verified_at'));
+            if($request->has('isActive')){
+                $user->update($request->except('id', 'username', 'role', 'code_verification', 'email_verified_at'));
+            }else{
+                $user->update($request->except('id', 'username', 'role', 'code_verification', 'isActive', 'email_verified_at'));
+            }
         }else {
             return response()->json([
                 'message' => 'El email que deseas agregar ya se encuentra registrado!'
