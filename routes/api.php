@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::patch('/questionScore/{id}', [ScoreController::class, 'storeQuestion']); // Update score
     Route::get('/score/{id}', [ScoreController::class, 'getScore']); // Get score
     Route::get('/scores', [ScoreController::class, 'getScores']); // Get scores list
+    Route::get('/plays/user', [ScoreController::class, 'getPlayUser']); // Get plays User
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
