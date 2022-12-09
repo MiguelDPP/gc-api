@@ -65,7 +65,7 @@ class ScoreController extends Controller
 
         $request->validate($rules);
 
-        $scoreQuestion = ScoreQuestion::find($id);
+        $scoreQuestion = ScoreQuestion::where('score_id', $id)->first();
 
         $scoreQuestion->answer = $request->answer;
         $scoreQuestion->save();
