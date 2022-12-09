@@ -34,7 +34,7 @@ class ScoreController extends Controller
         }
 
         if ($questions->count() > 0) {
-            $question = Question::inRandomOrder()->where('is_validated', true)->where('id', '!=', $questions->pluck('question_id'))->first();
+            $question = Question::inRandomOrder()->where('is_validated', true)->whereNotIn('id', $questions->pluck('question_id'))->first();
         }else {
             $question = Question::inRandomOrder()->where('is_validated', true)->first();
         }
