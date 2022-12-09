@@ -50,7 +50,7 @@ class ScoreController extends Controller
         return response()->json([
             'status' => 200,
             'scoreQuestion_id' => $scoreQuestion->id,
-            'question' => $question,
+            'question' => $question->load('answers')
         ]);
     }
 
