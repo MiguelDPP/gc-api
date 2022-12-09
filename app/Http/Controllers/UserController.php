@@ -27,13 +27,12 @@ class UserController extends Controller
 
     public function find ($id) {
         $user = User::where('id',$id)->first();
-        $municipality = Municipality::where('id',$user->municipality_id)->first();
+        //$municipality = Municipality::where('id',$user->municipality_id)->first();
         /** HOLAAAAA */
         return response()->json([
             'message' => 'User information',
-            'user' => $user,
-            'municipality' => $municipality,
-            'roles' => $user->roles(),
+            'user' => $user->load('municipality', 'roles'),
+            'roles' => $user->roles()->first(),
         ], 200);
     }
 
@@ -64,7 +63,12 @@ class UserController extends Controller
 
         $request->validate($rules);
 
-        $user = auth()->user()->user()->first();
+        if($request->has('id')){
+            $user =User::where('id', $request->id)->first();
+        }else{
+            $user = auth()->user()->user()->first();
+        }
+
 
         $email = User::where('email', $request->email)->where('id', '!=', $user->id)->first();
 
@@ -72,7 +76,7 @@ class UserController extends Controller
             $user->update($request->except('id', 'username', 'role', 'code_verification', 'isActive', 'email_verified_at'));
         }else {
             return response()->json([
-                'message' => 'Email already exists'
+                'message' => 'El email que deseas agregar ya se encuentra registrado!'
             ], 400);
             // $user->update($request->except('id', 'username', 'role', 'email', 'code_verification', 'isActive', 'email_verified_at'));
         }
