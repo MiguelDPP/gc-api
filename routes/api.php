@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // Scores al dia
     Route::post('/score', [ScoreController::class, 'storeScore']); // Register score
-    Route::get('/questionScore/{id}', [ScoreController::class, 'getQuestionScore']); // Get question
+    Route::post('/questionScore/{id}', [ScoreController::class, 'getQuestionScore']); // Get question
     Route::patch('/questionScore/{id}', [ScoreController::class, 'storeQuestion']); // Update score
     Route::get('/score/{id}', [ScoreController::class, 'getScore']); // Get score
     Route::get('/scores', [ScoreController::class, 'getScores']); // Get scores list
