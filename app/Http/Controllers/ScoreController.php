@@ -33,7 +33,7 @@ class ScoreController extends Controller
             }
         }
 
-        $question = Question::inRandomOrder()->where('is_validated', true)->where('id', '!=', $questions->pluck('id'))->where('is_validated', true)->first();
+        $question = Question::inRandomOrder()->where('is_validated', true)->where('id', '!=', $questions->pluck('id'))->first();
 
         if (!$question) {
             return response()->json([
