@@ -25,7 +25,7 @@ class ScoreController extends Controller
 
         foreach ($questions as $question) {
             $answer = $question->answer;
-            if ($answer == null || !$answer->is_correct) {
+            if ($answer == null || !$answer) {
                 return response()->json([
                     'status' => 405,
                     'message' => 'Ya tienes una respuesta incorrecta',

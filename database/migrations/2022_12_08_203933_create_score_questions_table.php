@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('score_id');
             $table->foreignId('question_id');
-            $table->foreignId('answer')->nullable();
+            $table->boolean('answer')->nullable();
             $table->timestamps();
 
             $table->foreign('score_id')->references('id')->on('scores');
