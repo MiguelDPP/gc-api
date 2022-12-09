@@ -56,14 +56,14 @@ class ScoreController extends Controller
 
     public function storeQuestion ($id) {
         $rules = [
-            'answer_id' => 'required|integer|exists:answers,id',
+            'answer' => 'required|boolean',
         ];
 
         $request = request()->validate($rules);
 
         $scoreQuestion = ScoreQuestion::find($id);
 
-        $scoreQuestion->answer_id = $request['answer_id'];
+        $scoreQuestion->answer = $request['answer'];
         $scoreQuestion->save();
 
         return response()->json([
@@ -81,7 +81,7 @@ class ScoreController extends Controller
 
         foreach ($questions as $question) {
             $answer = $question->answer;
-            if ($answer != null && $answer->is_correct) {
+            if ($answer != null && $answer) {
                 $points += $question->points;
             }
         }
@@ -103,7 +103,7 @@ class ScoreController extends Controller
 
             foreach ($questions as $question) {
                 $answer = $question->answer;
-                if ($answer != null && $answer->is_correct) {
+                if ($answer != null && $answer) {
                     $points += $question->points;
                 }
             }
