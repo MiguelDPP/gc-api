@@ -76,7 +76,7 @@ class UserController extends Controller
             $user->update($request->except('id', 'username', 'role', 'code_verification', 'isActive', 'email_verified_at'));
         }else {
             return response()->json([
-                'message' => 'Email already exists'
+                'message' => 'El email que deseas agregar ya se encuentra registrado!'
             ], 400);
             // $user->update($request->except('id', 'username', 'role', 'email', 'code_verification', 'isActive', 'email_verified_at'));
         }
