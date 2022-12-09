@@ -6,6 +6,7 @@ use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\OtherController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\UserController;
 use App\Models\ScoreQuestion;
 use Illuminate\Http\Request;
@@ -71,11 +72,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/question/{id}/validate', [QuestionController::class, 'validateQuestion']); // Validate question
 
     // Scores al dia
-    Route::post('/score', [ScoreQuestion::class, 'storeScore']); // Register score
-    Route::get('/questionScore/{id}', [ScoreQuestion::class, 'getQuestionScore']); // Get question
-    Route::patch('/questionScore/{id}', [ScoreQuestion::class, 'storeQuestion']); // Update score
-    Route::get('/score/{id}', [ScoreQuestion::class, 'getScore']); // Get score
-    Route::get('/scores', [ScoreQuestion::class, 'getScores']); // Get scores list
+    Route::post('/score', [ScoreController::class, 'storeScore']); // Register score
+    Route::get('/questionScore/{id}', [ScoreController::class, 'getQuestionScore']); // Get question
+    Route::patch('/questionScore/{id}', [ScoreController::class, 'storeQuestion']); // Update score
+    Route::get('/score/{id}', [ScoreController::class, 'getScore']); // Get score
+    Route::get('/scores', [ScoreController::class, 'getScores']); // Get scores list
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
