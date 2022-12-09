@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('score_id');
             $table->foreignId('question_id');
-            $table->foreignId('answer_id')->nullable();
+            $table->foreignId('answer')->nullable();
             $table->timestamps();
 
             $table->foreign('score_id')->references('id')->on('scores');
             $table->foreign('question_id')->references('id')->on('questions');
-            $table->foreign('answer_id')->references('id')->on('answers');
+            // $table->foreign('answer_id')->references('id')->on('answers');
         });
     }
 

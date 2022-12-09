@@ -12,7 +12,7 @@ class ScoreQuestion extends Model
     protected $fillable = [
         'score_id',
         'question_id',
-        'answer_id',
+        'answer',
     ];
 
     public function score()
@@ -25,8 +25,8 @@ class ScoreQuestion extends Model
         return $this->hasOne(Question::class, 'id', 'question_id');
     }
 
-    public function answer()
-    {
-        return $this->hasOne(Answer::class, 'id', 'answer_id');
-    }
+    // public function answer()
+    // {
+    //     return $this->hasOne(Answer::class, 'id', 'answer_id');
+    // }
 }
