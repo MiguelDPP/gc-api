@@ -180,9 +180,11 @@ class ScoreController extends Controller
     }
 
     public function getScoreGlobal($id){
+        $listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
+        $listJson = [];
         return response()->json([
             'status' => 200,
-            'score' => 'Hola',
+            'score' => $listUserStudent,
         ]);   
         /*$listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
         $listJson = [];
