@@ -429,6 +429,11 @@ class QuestionController extends Controller
             ], 404);
         }
 
+        $question->scoreQuestions()->delete();
+        $question->answers()->delete();
+        $question->funFacts()->delete();
+        $question->labels()->detach();
+
         $question->delete();
 
         return response()->json([

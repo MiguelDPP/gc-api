@@ -49,4 +49,9 @@ class Question extends Model
     {
         return $this->hasOne(User::class, 'id', 'created_by_id');
     }
+
+    public function scoreQuestions()
+    {
+        return $this->hasMany(ScoreQuestion::class, 'question_id', 'id');
+    }
 }
