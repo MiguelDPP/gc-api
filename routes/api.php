@@ -81,6 +81,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/score/{id}', [ScoreController::class, 'getScore']); // Get score
     Route::get('/scores', [ScoreController::class, 'getScores']); // Get scores list
     Route::get('/plays/user/{id}', [ScoreController::class, 'getPlayUser']); // Get plays User
+    Route::get('/plays/global/{id}', [ScoreController::class, 'getScoreGlobal']); // Get plays User
+
 
     // Get funfacts
     Route::get('/funfacts', [ScoreController::class, 'getFunFacts']); // Get funfacts

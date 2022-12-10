@@ -153,6 +153,43 @@ class ScoreController extends Controller
         ]);
     }
 
+    public function getScoreGlobal($id){
+        $listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
+        $listJson = [];
+        foreach ($listUserStudent as $item) {
+            $pointUser = $this->getPlayUser($id);
+            $point = 0;
+            foreach ($pointUser as $puser) {
+                $point += $puser->points;
+            }
+            $array = [
+                'id' => $item->id,
+                'username' => $item->username,
+                'points' => $point
+            ];
+            array_push($listJson, $array);
+        }
+        $this->burbuja($listJson);
+        return response()->json([
+            'status' => 200,
+            'score' => $listJson,
+        ]);   
+    }
+
+    function burbuja(&$arreglo)
+    {
+        $longitud = count($arreglo);
+        for ($i = 0; $i < $longitud; $i++) {
+            for ($j = 0; $j < $longitud - 1; $j++) {
+                if ($arreglo[$j]['points'] > $arreglo[$j + 1]['points']) {
+                    $temporal = $arreglo[$j];
+                    $arreglo[$j] = $arreglo[$j + 1];
+                    $arreglo[$j + 1] = $temporal;
+                }
+            }
+        }
+    }
+
     public function getFunFacts () {
         $funfacts = FunFact::all();
 
