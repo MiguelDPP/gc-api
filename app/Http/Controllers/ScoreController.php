@@ -123,7 +123,7 @@ class ScoreController extends Controller
     }
 
     public function getPlayUser($id){
-        $plays = Score::where('user_id',$id)->orderBy('created_at', 'desc')->get();
+        $plays = Score::where('user_id',$id)->get();
         return response()->json([
             'status' => 200,
             'plays' => $plays,
