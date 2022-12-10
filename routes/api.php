@@ -85,6 +85,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Get funfacts
     Route::get('/funfacts', [ScoreController::class, 'getFunFacts']); // Get funfacts
 
+    // Puntos
+    Route::get('/points', [ScoreController::class, 'getPoints']); // Get points
+
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 

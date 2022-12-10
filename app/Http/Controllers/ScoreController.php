@@ -131,7 +131,7 @@ class ScoreController extends Controller
             'plays' => $plays,
         ]);
         /*$responseJson = [];
-        
+
         foreach ($plays as $play) {
 
             $questions = ScoreQuestion::where('score_id', $play->id)->get();
@@ -181,6 +181,29 @@ class ScoreController extends Controller
         return response()->json([
             'status' => 404,
             'message' => 'No more questions',
+        ]);
+    }
+
+    public function getPoints () {
+        $user = auth()->user();
+        $scores = Score::where('user_id', $user->user_id)->get();
+
+        $points = 0;
+
+        foreach ($scores as $score) {
+            $questions = $score->questions;
+
+            foreach ($questions as $question) {
+                $answer = $question->answer;
+                if ($answer != null && $answer) {
+                    $points += $question->question->points;
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'points' => $points,
         ]);
     }
 
