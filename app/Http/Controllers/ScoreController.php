@@ -124,10 +124,17 @@ class ScoreController extends Controller
 
     public function getPlayUser($id){
         $plays = Score::where('user_id',$id)->orderBy('created_at', 'desc')->get();
-        $responseJson = [];
+        return response()->json([
+            'status' => 200,
+            'plays' => $plays,
+        ]);
+        /*$responseJson = [];
+        
         foreach ($plays as $play) {
+
             $questions = ScoreQuestion::where('score_id', $play->id)->get();
             $points = 0;
+
             foreach ($questions as $question) {
                 $question_answer = Question::where('id', $question->question_id)->first();
                 if($question->answer == 1){
@@ -137,15 +144,15 @@ class ScoreController extends Controller
             $response = [
                 'id' => $play->id,
                 'fecha'=> $play->created_at,
-                'points' =>$points
+                'points' => $points
             ];
             array_push($responseJson, $response);
         }
-        
+
         return response()->json([
             'status' => 200,
             'plays' => $responseJson,
-        ]);
+        ]);*/
     }
 
 }
