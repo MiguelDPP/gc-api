@@ -125,12 +125,8 @@ class ScoreController extends Controller
     }
 
     public function getPlayUser($id){
-        $plays = Score::where('user_id',$id)->get();
-        return response()->json([
-            'status' => 200,
-            'plays' => $plays,
-        ]);
-        /*$responseJson = [];
+        $plays = Score::where('user_id',$id)->orderBy('created_at','desc')->get();
+        $responseJson = [];
 
         foreach ($plays as $play) {
 
@@ -154,7 +150,7 @@ class ScoreController extends Controller
         return response()->json([
             'status' => 200,
             'plays' => $responseJson,
-        ]);*/
+        ]);
     }
 
     public function getFunFacts () {
