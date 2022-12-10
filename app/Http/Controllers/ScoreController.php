@@ -198,7 +198,7 @@ class ScoreController extends Controller
             ];
             array_push($listJson, $array);
         }
-        $this->burbuja($listJson);
+        $listJson = $this->burbuja($listJson);
         return response()->json([
             'status' => 200,
             'score' => $listJson,
@@ -206,19 +206,20 @@ class ScoreController extends Controller
         
     }
 
-    function burbuja(&$arreglo)
-        {
-            $longitud = count($arreglo);
-            for ($i = 0; $i < $longitud; $i++) {
-                for ($j = 0; $j < $longitud - 1; $j++) {
-                    if ($arreglo[$j]['points'] > $arreglo[$j + 1]['points']) {
-                        $temporal = $arreglo[$j];
-                        $arreglo[$j] = $arreglo[$j + 1];
-                        $arreglo[$j + 1] = $temporal;
-                    }
+    function burbuja($arreglo)
+    {
+        $longitud = count($arreglo);
+        for ($i = 0; $i < $longitud; $i++) {
+            for ($j = 0; $j < $longitud - 1; $j++) {
+                if ($arreglo[$j]['points'] > $arreglo[$j + 1]['points']) {
+                    $temporal = $arreglo[$j];
+                    $arreglo[$j] = $arreglo[$j + 1];
+                    $arreglo[$j + 1] = $temporal;
                 }
             }
         }
+        return $arreglo;
+    }
 
     public function getFunFacts () {
         $funfacts = FunFact::all();
