@@ -184,14 +184,15 @@ class ScoreController extends Controller
         $listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
         $listJson = [];
         foreach ($listUserStudent as $item) {
-            $pointUser = $this->getPlayUserPersonality($item->id);
+            $user = User::where('id', $item->user_id)->first();
+            $pointUser = $this->getPlayUserPersonality($item->user_id);
             $point = 0;
             foreach ($pointUser as $puser) {
                 $point += $puser['points'];
             }
             $array = [
-                'id' => $item->id,
-                'username' => $item->username,
+                'id' => $user->id,
+                'username' => $user->username,
                 'points' => $point
             ];
             array_push($listJson, $array);
