@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FunFact;
 use App\Models\Question;
 use App\Models\Score;
 use App\Models\ScoreQuestion;
@@ -142,11 +143,33 @@ class ScoreController extends Controller
             ];
             array_push($responseJson, $response);
         }
-        
+
         return response()->json([
             'status' => 200,
             'plays' => $responseJson,
         ]);
+    }
+
+    public function getFunFacts () {
+        $funfacts = FunFact::all();
+
+        return response()->json([
+            'status' => 200,
+            'funfacts' => $funfacts,
+        ]);
+    }
+
+    public function getDemoQuestion () {
+        $questions = Question::inRandomOrder()->where('is_validated', true);
+
+        foreach ($questions as $q) {
+            if ($q->funFacts->count() > 0 && $q->type_question_id != 4) {
+                return response()->json([
+                    'status' => 200,
+                    'question' => $q->load('answers', 'municipality', 'funFacts'),
+                ]);
+            }
+        }
     }
 
 }
