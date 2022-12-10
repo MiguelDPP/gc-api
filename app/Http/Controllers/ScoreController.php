@@ -6,6 +6,7 @@ use App\Models\FunFact;
 use App\Models\Question;
 use App\Models\Score;
 use App\Models\ScoreQuestion;
+use App\Models\User_Role_Relationship;
 use Illuminate\Http\Request;
 
 class ScoreController extends Controller
@@ -182,15 +183,9 @@ class ScoreController extends Controller
     public function getScoreGlobal($id){
         $listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
         $listJson = [];
-        return response()->json([
-            'status' => 200,
-            'score' => $listUserStudent,
-        ]);   
-        /*$listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
-        $listJson = [];
         foreach ($listUserStudent as $item) {
             $pointUser = $this->getPlayUserPersonality($item->id);
-            /*$point = 0;
+            $point = 0;
             foreach ($pointUser as $puser) {
                 $point += $puser['points'];
             }
@@ -199,10 +194,14 @@ class ScoreController extends Controller
                 'username' => $item->username,
                 'points' => $point
             ];
-            array_push($listJson, $array);*/
-            //array_push($listJson, $pointUser);
-        //}
+            array_push($listJson, $array);
+            array_push($listJson, $pointUser);
+        }
         //$this->burbuja($listJson);
+        return response()->json([
+            'status' => 200,
+            'score' => $listUserStudent,
+        ]); 
         
     }
 
