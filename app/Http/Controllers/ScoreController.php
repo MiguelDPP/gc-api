@@ -170,6 +170,11 @@ class ScoreController extends Controller
                 ]);
             }
         }
+
+        return response()->json([
+            'status' => 404,
+            'message' => 'No more questions',
+        ]);
     }
 
 }
