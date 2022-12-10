@@ -169,7 +169,7 @@ class ScoreController extends Controller
             ];
             array_push($listJson, $array);
         }
-        $this->burbuja($listJson);
+        //$this->burbuja($listJson);
         return response()->json([
             'status' => 200,
             'score' => $listJson,
