@@ -38,6 +38,9 @@ Route::post('/recovery-password', [AuthController::class, 'recoveryPassword']);
 Route::post('/sendCodeEnableUser', [UserController::class, 'SendCodeEnableUser']); // Send code to enable user
 Route::post('/enableUser', [UserController::class, 'enableUser']); // Enable user
 
+// Question demo
+Route::get('/questionDemo', [ScoreController::class, 'getDemoQuestion']); // Get question demo
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [UserController::class, 'user']); // Get user information
     Route::get('/getUser/{id}', [UserController::class, 'find']);
@@ -78,6 +81,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/score/{id}', [ScoreController::class, 'getScore']); // Get score
     Route::get('/scores', [ScoreController::class, 'getScores']); // Get scores list
     Route::get('/plays/user/{id}', [ScoreController::class, 'getPlayUser']); // Get plays User
+
+    // Get funfacts
+    Route::get('/funfacts', [ScoreController::class, 'getFunFacts']); // Get funfacts
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);

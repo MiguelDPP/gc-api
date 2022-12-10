@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FunFact;
 use App\Models\Question;
 use App\Models\Score;
 use App\Models\ScoreQuestion;
@@ -87,7 +88,8 @@ class ScoreController extends Controller
         foreach ($questions as $question) {
             $answer = $question->answer;
             if ($answer != null && $answer) {
-                $points += $question->points;
+                // $pointsT = $question->question->points;
+                $points += $question->question->points;
             }
         }
 
@@ -153,6 +155,33 @@ class ScoreController extends Controller
             'status' => 200,
             'plays' => $responseJson,
         ]);*/
+    }
+
+    public function getFunFacts () {
+        $funfacts = FunFact::all();
+
+        return response()->json([
+            'status' => 200,
+            'funfacts' => $funfacts,
+        ]);
+    }
+
+    public function getDemoQuestion () {
+        $questions = Question::inRandomOrder()->where('is_validated', true)->get();
+
+        foreach ($questions as $q) {
+            if ($q->funFacts->count() > 0 && $q->type_question_id != 4) {
+                return response()->json([
+                    'status' => 200,
+                    'question' => $q->load('answers', 'municipality', 'funFacts'),
+                ]);
+            }
+        }
+
+        return response()->json([
+            'status' => 404,
+            'message' => 'No more questions',
+        ]);
     }
 
 }
