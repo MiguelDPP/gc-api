@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\FunFact;
 use App\Models\Question;
 use App\Models\Score;
+use App\Models\User;
 use App\Models\ScoreQuestion;
+use App\Models\User_Role_Relationship;
 use Illuminate\Http\Request;
 
 class ScoreController extends Controller
@@ -151,6 +153,72 @@ class ScoreController extends Controller
             'status' => 200,
             'plays' => $responseJson,
         ]);
+    }
+
+    public function getPlayUserPersonality($id){
+        $plays = Score::where('user_id',$id)->orderBy('created_at','desc')->get();
+        $responseJson = [];
+
+        foreach ($plays as $play) {
+
+            $questions = ScoreQuestion::where('score_id', $play->id)->get();
+            $points = 0;
+
+            foreach ($questions as $question) {
+                $question_answer = Question::where('id', $question->question_id)->first();
+                if($question->answer == 1){
+                    $points += $question_answer->points;
+                }
+            }
+            $response = [
+                'id' => $play->id,
+                'fecha'=> $play->created_at,
+                'points' => $points
+            ];
+            array_push($responseJson, $response);
+        }
+
+        return $responseJson;
+    }
+
+    public function getScoreGlobal($id){
+        $listUserStudent = User_Role_Relationship::all();
+        $listJson = [];
+        foreach ($listUserStudent as $item) {
+            $itemUser = User::where('id', $item->user_id)->first();
+            $pointUser = $this->getPlayUserPersonality($item->user_id);
+            $point = 0;
+            foreach ($pointUser as $puser) {
+                $point += $puser['points'];
+            }
+            $array = [
+                'id' => $itemUser->id,
+                'username' => $itemUser->username,
+                'points' => $point
+            ];
+            array_push($listJson, $array);
+        }
+        $listJson = $this->burbuja($listJson);
+        return response()->json([
+            'status' => 200,
+            'score' => $listJson,
+        ]); 
+        
+    }
+
+    function burbuja($arreglo)
+    {
+        $longitud = count($arreglo);
+        for ($i = 0; $i < $longitud; $i++) {
+            for ($j = 0; $j < $longitud - 1; $j++) {
+                if ($arreglo[$j]['points'] < $arreglo[$j + 1]['points']) {
+                    $temporal = $arreglo[$j];
+                    $arreglo[$j] = $arreglo[$j + 1];
+                    $arreglo[$j + 1] = $temporal;
+                }
+            }
+        }
+        return $arreglo;
     }
 
     public function getFunFacts () {
