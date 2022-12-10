@@ -182,7 +182,7 @@ class ScoreController extends Controller
     }
 
     public function getScoreGlobal($id){
-        $listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
+        $listUserStudent = User_Role_Relationship::all();
         $listJson = [];
         foreach ($listUserStudent as $item) {
             $itemUser = User::where('id', $item->user_id)->first();
@@ -198,7 +198,7 @@ class ScoreController extends Controller
             ];
             array_push($listJson, $array);
         }
-        //$this->burbuja($listJson);
+        $this->burbuja($listJson);
         return response()->json([
             'status' => 200,
             'score' => $listJson,
@@ -206,7 +206,7 @@ class ScoreController extends Controller
         
     }
 
-    /*function burbuja(&$arreglo)
+    function burbuja(&$arreglo)
         {
             $longitud = count($arreglo);
             for ($i = 0; $i < $longitud; $i++) {
@@ -218,7 +218,7 @@ class ScoreController extends Controller
                     }
                 }
             }
-        }*/
+        }
 
     public function getFunFacts () {
         $funfacts = FunFact::all();
