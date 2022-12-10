@@ -195,15 +195,28 @@ class ScoreController extends Controller
                 'points' => $point
             ];
             array_push($listJson, $array);
-            array_push($listJson, $pointUser);
         }
-        //$this->burbuja($listJson);
+        $this->burbuja($listJson);
         return response()->json([
             'status' => 200,
-            'score' => $listUserStudent,
+            'score' => $listJson,
         ]); 
         
     }
+
+    function burbuja(&$arreglo)
+        {
+            $longitud = count($arreglo);
+            for ($i = 0; $i < $longitud; $i++) {
+                for ($j = 0; $j < $longitud - 1; $j++) {
+                    if ($arreglo[$j]['points'] > $arreglo[$j + 1]['points']) {
+                        $temporal = $arreglo[$j];
+                        $arreglo[$j] = $arreglo[$j + 1];
+                        $arreglo[$j + 1] = $temporal;
+                    }
+                }
+            }
+        }
 
     public function getFunFacts () {
         $funfacts = FunFact::all();
