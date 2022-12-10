@@ -184,7 +184,7 @@ class ScoreController extends Controller
         $listJson = [];
         foreach ($listUserStudent as $item) {
             $pointUser = $this->getPlayUserPersonality($item->id);
-            $point = 0;
+            /*$point = 0;
             foreach ($pointUser as $puser) {
                 $point += $puser['points'];
             }
@@ -193,7 +193,8 @@ class ScoreController extends Controller
                 'username' => $item->username,
                 'points' => $point
             ];
-            array_push($listJson, $array);
+            array_push($listJson, $array);*/
+            array_push($listJson, $pointUser);
         }
         //$this->burbuja($listJson);
         return response()->json([
