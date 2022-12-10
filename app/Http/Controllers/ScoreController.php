@@ -160,7 +160,7 @@ class ScoreController extends Controller
     }
 
     public function getDemoQuestion () {
-        $questions = Question::inRandomOrder()->where('is_validated', true);
+        $questions = Question::inRandomOrder()->where('is_validated', true)->get();
 
         foreach ($questions as $q) {
             if ($q->funFacts->count() > 0 && $q->type_question_id != 4) {
