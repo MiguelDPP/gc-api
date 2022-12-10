@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FunFact;
 use App\Models\Question;
 use App\Models\Score;
+use App\Models\User;
 use App\Models\ScoreQuestion;
 use App\Models\User_Role_Relationship;
 use Illuminate\Http\Request;
