@@ -157,7 +157,7 @@ class ScoreController extends Controller
         $listUserStudent = User_Role_Relationship::where('role_id', 2)->get();
         $listJson = [];
         foreach ($listUserStudent as $item) {
-            $pointUser = $this->getPlayUser($id);
+            $pointUser = $this->getPlayUser($item->id);
             $point = 0;
             foreach ($pointUser as $puser) {
                 $point += $puser->points;
