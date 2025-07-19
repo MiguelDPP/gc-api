@@ -15,6 +15,9 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && docker-php-ext-install pdo pdo_mysql zip
 
+# Instala extensiones de PHP, incluyendo PostgreSQL
+RUN docker-php-ext-install pdo pdo_pgsql zip
+
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
