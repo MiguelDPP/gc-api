@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ErrorController;
@@ -22,6 +22,32 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('/deploy/run', function (Request $request) {
+    if ($request->header('X-DEPLOY-KEY') !== env('DEPLOY_KEY')) {
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = Artisan::output();
+
+        Artisan::call('db:seed', ['--force' => true]);
+        $seedOutput = Artisan::output();
+
+        return response()->json([
+            'success' => true,
+            'migrations' => $migrateOutput,
+            'seeders' => $seedOutput,
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+});
 
 Route::get('/prueba', function (Request $request) {
     return response()->json(['message' => 'Hola mundo']);
